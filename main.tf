@@ -17,6 +17,7 @@ resource "aws_vpc" "vpc_test" {
 resource "aws_subnet" "subnet-pu" {
   vpc_id     = aws_vpc.vpc_test.id
   cidr_block = "192.168.1.0/24"
+  map_public_ip_on_launch = true
   availability_zone = "ap-northeast-1a"
   tags = {
     Name = "subnet-pu"
@@ -118,7 +119,6 @@ resource "aws_instance" "web1" {
   instance_type = "t2.micro"
   key_name = "EC2-VPC-wei-01"
   subnet_id = aws_subnet.subnet-pu.id
-  public_ips = true
   security_groups = [aws_security_group.sg-pu.id]
   tags = {
     Name = "ec2-pu"
