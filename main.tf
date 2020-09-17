@@ -44,7 +44,7 @@ resource "aws_route_table" "pu" {
   vpc_id = aws_vpc.vpc_test.id
 
   route {
-    destination_cidr_block = "0.0.0.0/0"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw-test.id
   }
 
