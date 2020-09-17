@@ -1,6 +1,4 @@
-provider "aws" {
-  version = "3.6.0"
-  
+provider "aws" { 
   region  = "ap-northeast-1"
 }
 
