@@ -72,7 +72,7 @@ resource "aws_route_table_association" "b" {
 }
 
 resource "aws_security_group" "sg-pu" {
-  name        = "sg-pu"
+  name        = "trsgpu"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.vpc_test.id
 
@@ -99,17 +99,17 @@ resource "aws_security_group" "sg-pu" {
   }
 
   tags = {
-    Name = "sg-pu"
+    Name = "grsgpu"
   }
 }
 
 resource "aws_security_group" "sg-pr" {
-  name        = "sg-pr"
+  name        = "trsgpr"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.vpc_test.id
 
   tags = {
-    Name = "sg-pr"
+    Name = "trsgpr"
   }
 }
 
