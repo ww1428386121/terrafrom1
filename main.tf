@@ -122,6 +122,7 @@ resource "aws_instance" "web1" {
   tags = {
     Name = "ec2-pu"
   }
+  user_data = file("yum.sh")
 }
 
 resource "aws_instance" "pr2" {
