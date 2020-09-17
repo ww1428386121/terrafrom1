@@ -118,6 +118,7 @@ resource "aws_instance" "web1" {
   instance_type = "t2.micro"
   key_name = "EC2-VPC-wei-01"
   subnet_id = aws_subnet.subnet-pu.id
+  public_ips = true
   security_groups = [aws_security_group.sg-pu.id]
   tags = {
     Name = "ec2-pu"
