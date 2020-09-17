@@ -26,7 +26,7 @@ resource "aws_instance" "web" {
   ami           = "ami-0cc75a8978fbbc969"
   instance_type = "t2.micro"
   key_name = "key_test"
-  subnet_id = "subnet-pu"
+  subnet_id = aws_subnet.subnet-pu.id
   tags = {
     Name = "HelloWorld"
   }
