@@ -188,20 +188,34 @@ resource "aws_instance" "pr2" {
   }
 }
 
-resource "aws_lb" "test" {
-  name = "test-lb-tf"
-  internal = true
-  load_balancer_type = "application"
-  security_groups = ["${aws_security_group.sg-pu.id}"]
-  subnets = ["${aws_subnet.subnet-pu1.id}"]
-
-  enable_deletion_protection = true
+resource "aws_s3_bucket" "s3_test" {
+  bucket = "my-tf-test-bucket"
+  acl = "private"
 
   tags = {
-    Name = "test-lb-tf"
+    Name = "my-tf-test-bucket"
+    Environment = "Dev"
   }
 }
 
+resource "aws_lb" "test" {
+  name               = "test-lb-tf"
+  internal           = true
+  load_balancer_type = "application"
+  security_groups    = ["${aws_security_group.sg-pu.id}"]
+  subnets            = ["${aws_subnet.subnet-pu1.id}","${aws_subnet.subnet-pu2.id}"]
+
+  enable_deletion_protection = true
+
+  access_logs {
+    bucket  = "${aws_s3_bucket.s3_test}"
+    prefix  = "test-lb"
+    enabled = true
+
+  tags = {
+    Environment = "production"
+  }
+}
 resource "aws_lb_target_group" "test_target_group" {
   name = "tf-example-lb-tg"
   port = 80
