@@ -188,15 +188,6 @@ resource "aws_instance" "pr2" {
   }
 }
 
-resource "aws_s3_bucket" "s3_test" {
-  bucket = "my-tf-test-bucket"
-  acl    = "private"
-
-  tags = {
-    Name        = "my-tf-test-bucket"
-    Environment = "Dev"
-  }
-
 resource "aws_lb" "test" {
   name               = "test-lb-tf"
   internal           = true
@@ -205,17 +196,12 @@ resource "aws_lb" "test" {
   subnets            = ["${aws_subnet.subnet-pu1.id},${aws_subnet.subnet-pu2.id}"]
 
   enable_deletion_protection = true
-
-  access_logs {
-    bucket  = "${aws_s3_bucket.s3_test}"
-    prefix  = "test-lb"
-    enabled = true
   }
 
   tags {
     Environment = "production"
   }
-}
+
 resource "aws_lb_target_group" "test_target_group" {
   name = "tf-example-lb-tg"
   port = 80
