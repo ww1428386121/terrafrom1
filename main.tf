@@ -193,13 +193,12 @@ resource "aws_lb" "test" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.sg-pu.id}"]
-  subnet_id          = ["${aws_subnet.subnet-pu1.id}"]
-  subnet_id          = ["${aws_subnet.subnet-pu2.id}"]
+  subnets            = ["${aws_subnet.subnet-pu1.id}","${aws_subnet.subnet-pu2.id}"]
 
   enable_deletion_protection = true
 
   access_logs {
-    bucket = "20200923-tf"
+    bucket = "20200923-tf"46
     prefix = "test-lb"
     enabled = true
   }
