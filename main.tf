@@ -187,3 +187,66 @@ resource "aws_instance" "pr2" {
     Name = "ec2-pr2"
   }
 }
+
+resource "aws_s3_bucket" "s3_test" {
+  bucket = "my-tf-test-bucket"
+  acl    = "private"
+
+  tags = {
+    Name        = "my-tf-test-bucket"
+    Environment = "Dev"
+  }
+
+resource "aws_lb" "test" {
+  name               = "test-lb-tf"
+  internal           = true
+  load_balancer_type = "application"
+  security_groups    = ["${aws_security_group.sg-pu.id}"]
+  subnets            = ["${aws_subnet.subnet-pu1.id},${aws_subnet.subnet-pu2.id}"]
+
+  enable_deletion_protection = true
+
+  access_logs {
+    bucket  = "${aws_s3_bucket.s3_test}"
+    prefix  = "test-lb"
+    enabled = true
+  }
+
+  tags {
+    Environment = "production"
+  }
+}
+
+resource "aws_lb_listener" "front_end" {
+  load_balancer_arn = "${aws_lb.front_end.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_lb_target_group.test_target_group.arn}"
+    type             = "forward"
+  }
+}
+
+resource "aws_lb_target_group" "test_target_group" {
+  name     = "tf-example-lb-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.vpc_test.id
+}
+
+resource "aws_vpc" "vpc_test" {
+  cidr_block = "192.168.0.0/16"
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.test_target_group.arn
+  target_id        = aws_instance.web1.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.test_target_group.arn
+  target_id        = aws_instance.web2.id
+  port             = 80
+}
