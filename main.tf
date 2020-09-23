@@ -216,9 +216,15 @@ resource "aws_lb" "test" {
     Environment = "production"
   }
 }
+resource "aws_lb_target_group" "test_target_group" {
+  name = "tf-example-lb-tg"
+  port = 80
+  protocol = "HTTP"
+  vpc_id = aws_vpc.vpc_test.id
+}
 
 resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = "${aws_lb.front_end.arn}"
+  load_balancer_arn = "${aws_lb.test.arn}"
   port              = "80"
   protocol          = "HTTP"
 
@@ -228,24 +234,13 @@ resource "aws_lb_listener" "front_end" {
   }
 }
 
-resource "aws_lb_target_group" "test_target_group" {
-  name     = "tf-example-lb-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.vpc_test.id
-}
-
-resource "aws_vpc" "vpc_test" {
-  cidr_block = "192.168.0.0/16"
-}
-
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "test1" {
   target_group_arn = aws_lb_target_group.test_target_group.arn
   target_id        = aws_instance.web1.id
   port             = 80
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "test1" {
   target_group_arn = aws_lb_target_group.test_target_group.arn
   target_id        = aws_instance.web2.id
   port             = 80
