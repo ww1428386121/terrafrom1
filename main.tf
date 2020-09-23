@@ -198,7 +198,7 @@ resource "aws_lb" "test" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket = "${aws_s3_bucket.20200923-tf.bucket}"
+    bucket = "20200923-tf"
     prefix = "test-lb"
     enabled = true
   }
