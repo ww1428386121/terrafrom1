@@ -193,7 +193,7 @@ resource "aws_lb" "test" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = ["${aws_security_group.sg-pu.id}"]
-  subnets            = ["${aws_subnet.subnet-pu1.id}","${aws_subnet.subnet-pu2.id}"]
+  subnets            = var.aws_sbunets
 
   enable_deletion_protection = true
 

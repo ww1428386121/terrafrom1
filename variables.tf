@@ -3,3 +3,7 @@ variable "aws_region" {
   default = "ap-northeast-1"
 }
 
+variable "aws_sbunets" {
+  type    = list
+  default = "subnet-pu1,subnet-pu2"
+}
