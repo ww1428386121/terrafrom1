@@ -208,12 +208,12 @@ resource "aws_lb" "test" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket  = "${aws_s3_bucket.s3_test}"
-    prefix  = "test-lb"
+    bucket = "${aws_s3_bucket.s3_test}"
+    prefix = "test-lb"
     enabled = true
-
+  }
   tags = {
-    Environment = "production"
+    Name = "test-lb"
   }
 }
 resource "aws_lb_target_group" "test_target_group" {
