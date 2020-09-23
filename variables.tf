@@ -5,5 +5,5 @@ variable "aws_region" {
 
 variable "aws_sbunets" {
   type    = list
-  default = "subnet-pu1,subnet-pu2"
+  default = list("subnet-pu1","subnet-pu2")
 }
