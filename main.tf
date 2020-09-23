@@ -27,7 +27,7 @@ resource "aws_subnet" "subnet-pu1" {
 resource "aws_subnet" "subnet-pr1" {
   vpc_id     = aws_vpc.vpc_test.id
   cidr_block = "192.168.2.0/24"
-  availability_zone = "ap-northeast-1c"
+  availability_zone = "ap-northeast-1a"
   tags = {
     Name = "subnet-pr1"
   }
@@ -37,7 +37,7 @@ resource "aws_subnet" "subnet-pu2" {
   vpc_id     = aws_vpc.vpc_test.id
   cidr_block = "192.168.3.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "ap-northeast-1a"
+  availability_zone = "ap-northeast-1c"
   tags = {
     Name = "subnet-pu2"
   }
