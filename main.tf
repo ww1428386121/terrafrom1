@@ -188,8 +188,8 @@ resource "aws_instance" "pr2" {
   }
 }
 
-resource "aws_s3_bucket" "s3_test_terraform" {
-  bucket = "s3_test_terraform"
+resource "aws_s3_bucket" "s3_tt_tf" {
+  bucket = "s3_tt_tf"
   acl = "private"
 
   tags = {
@@ -208,7 +208,7 @@ resource "aws_lb" "test" {
   enable_deletion_protection = true
 
   access_logs {
-    bucket = "${aws_s3_bucket.s3_test_terraform.bucket}"
+    bucket = "${aws_s3_bucket.s3_tt_tf.bucket}"
     prefix = "test-lb"
     enabled = true
   }
