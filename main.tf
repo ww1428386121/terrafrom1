@@ -246,7 +246,7 @@ resource "aws_autoscaling_group" "bar" {
   desired_capacity   = 2
   max_size           = 3
   min_size           = 1
-
+  vpc_zone_identifier = [aws_subnet.subnet-pu1.id, aws_subnet.subnet-pu2.id]
   launch_template {
     id      = aws_launch_template.foobar.id
     version = "$Latest"
