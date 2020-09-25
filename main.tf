@@ -235,3 +235,25 @@ resource "aws_lb_target_group_attachment" "test2" {
   target_id        = aws_instance.web2.id
   port             = 80
 }
+
+resource "aws_launch_template" "foobar" {
+  name_prefix   = "foobar"
+  image_id      = "ami-0cc75a8978fbbc969"
+  instance_type = "t2.micro"
+}
+
+resource "aws_autoscaling_group" "bar" {
+  desired_capacity   = 1
+  max_size           = 3
+  min_size           = 1
+
+  launch_template {
+    id      = aws_launch_template.foobar.id
+    version = "$Latest"
+  }
+}
+
+resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+  autoscaling_group_name = aws_autoscaling_group.bar.id
+  alb_target_group_arn   = aws_lb_target_group.test_target_group.arn
+}
