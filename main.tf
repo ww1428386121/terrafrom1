@@ -243,7 +243,7 @@ resource "aws_launch_template" "foobar" {
 }
 
 resource "aws_autoscaling_group" "bar" {
-  desired_capacity   = 1
+  desired_capacity   = 2
   max_size           = 3
   min_size           = 1
 
